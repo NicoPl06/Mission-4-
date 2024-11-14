@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission 1</title>
+  <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+<header>
+  <h1>Mission 1</h1>
+
+  <nav>
+    <ul>
+      <li><a href="Accueil.html">Accueil</a></li>
+      <li><a href="Mission1.html">Mission 1</a></li>
+      <li><a href="Mission2.html">Mission 2</a></li>
+      <li><a href="Mission3.html">Mission 3</a></li>
+      <li><a href="Conclusion.html">Conclusion</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+  <section>
+    <h2>Contexte</h2>
+    <p>L’entreprise KDou, spécialisée dans la vente de produits alimentaires d'épicerie fine provenant de fournisseurs
+      mondiaux, cherche à consolider son image « éco-friendly » et à améliorer sa rentabilité. Dans cette optique,
+      l’entreprise souhaite mieux exploiter sa base de données clients et fournisseurs, examiner sa structure et
+      identifier des opportunités d’amélioration. Le travail commence par l’exploration et la structuration des
+      données pour ensuite proposer des solutions organisationnelles et stratégiques qui répondent à ses objectifs
+      commerciaux et environnementaux.</p>
+  </section>
+  <section>
+    <h2>Bilan structuré sur l’étude des données</h2>
+    <p>En analysant les tables disponibles, nous avons identifié les clés primaires et étrangères pour assurer une
+      bonne organisation relationnelle. Les clés primaires sont les colonnes qui identifient de manière unique les
+      enregistrements dans chaque table, comme l'ID client dans la table clients ou l'ID produit dans la table produits.
+      Quant aux clés étrangères, elles servent à établir des liens entre les différentes tables, par exemple, l'ID
+      fournisseur dans la table produits qui renvoie à l’ID fournisseur dans la table fournisseurs. Cette structuration
+      permet de naviguer aisément entre les différentes données et de maintenir des relations cohérentes. En explorant
+      manuellement les données, plusieurs résultats ont été obtenus : le nombre de clients nantais a été comptabilisé,
+      tout comme le nombre de clients en région parisienne, les fournisseurs basés en Amérique du Nord ont été
+      identifiés, ainsi que l’offre de produits suédois. Les données de commande ont permis d'extraire des
+      informations sur les produits commandés par des clients spécifiques comme Mikal Pavbo.</p>
+  </section>
+  <section>
+    <h2>Perspectives d’amélioration et conclusion</h2>
+    <p>On retrouve comme amélioration évidente le passage de la base de données d'Excel à Access. En effet Microsoft
+      Access est souvent mieux adapté qu'Excel pour gérer de grandes bases de données grâce à sa structure
+      relationnelle et à sa capacité à stocker des millions d'enregistrements sans ralentissement. Contrairement
+      à Excel, qui fonctionne en feuilles de calcul indépendantes, Access permet de relier des tables, simplifiant
+      les analyses complexes et la gestion de données liées (clients, commandes, inventaires). Avec Access, il est
+      également plus facile d’éviter les doublons et d’automatiser des processus, tout en sécurisant l'accès
+      aux données. Pour les entreprises nécessitant une gestion rigoureuse des données, Access est donc plus puissant
+      et efficace qu’Excel.</p>
+    <figure>
+      <img src="img/(Mission%201)%20Exemple_doublon.png" alt="Graphique de l'analyse sur la clientèle
+      (affichage de villes) ">
+      <figcaption>*Dans cette exemple, nous pouvons voir que la ville de versailles apparaît comme doublons.</figcaption>
+      <img src="img/(Mission%201)%20Exemple_Doublons2.png" alt="Répartition des fournisseurs par pays (extrait)">
+      <figcaption>*Dans cette exemple, nous pouvons voir 2 écritures différentes (Etats-Unis/USA) pour un même pays</figcaption>
+    </figure>
+  </section>
+</main>
+<footer>
+  <p>© 2024 Nicolas Plaisance, Imadeddine Aklouf, Ilyes Souidi, Shagisan Vinothan</p>
+</footer>
+</body>
+</html>

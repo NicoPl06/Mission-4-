@@ -1,0 +1,137 @@
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #111111;
+    color: #eeeeee;
+    line-height: 1.6;
+    margin: 0;
+}
+
+header {
+    text-align: center;
+    padding: 40px 0;
+    background-color: #111111;
+    color: #4CAF50;
+}
+
+header h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+
+nav {
+    background-color: #4CAF50;
+    padding: 15px;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+}
+
+nav ul li {
+    display: inline-block;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.2rem;
+    padding: 12px 24px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+}
+
+nav ul li a:hover {
+    color: chartreuse;
+}
+
+main {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 40px;
+    background: #222222;
+    border-radius: 12px;
+    position: relative;
+}
+
+main h2 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #4CAF50;
+    text-align: center;
+    position: relative;
+}
+main h3 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #4CAF50;
+    text-align: left;
+    position: relative;
+}
+
+main h4 {
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    color: #4CAF50;
+    text-align: left;
+    position: relative;
+}
+main a {
+    text-decoration: none;
+    list-style-type: none;
+    color: #4CAF50;
+}
+
+main a:hover {
+    color: chartreuse;
+}
+
+main p {
+    font-size: 1.2rem;
+    line-height: 1.8;
+    margin-bottom: 20px;
+    color: #bbbbbb;
+    text-align: justify;
+}
+
+
+ul {
+    list-style-type: square;
+    margin-left: 20px;
+    color: #444;
+}
+
+
+
+figure {
+    text-align: center;
+    margin: 30px;
+}
+
+figure img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+}
+
+figcaption {
+    font-style: italic;
+    color: #888;
+    margin-top: 10px;
+    font-size: 1rem;
+}
+
+
+footer {
+    background-color: #111111;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 1rem;
+}
+
+
