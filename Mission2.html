@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission 2</title>
+  <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+<header>
+  <h1>Mission 2</h1>
+
+  <nav>
+    <ul>
+      <li><a href="Accueil.html">Accueil</a></li>
+      <li><a href="Mission1.html">Mission 1</a></li>
+      <li><a href="Mission2.html">Mission 2</a></li>
+      <li><a href="Mission3.html">Mission 3</a></li>
+      <li><a href="Conclusion.html">Conclusion</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+  <section>
+    <h2>Contexte</h2>
+    <p>Cette mission vise à explorer et exploiter une base de données pour l’entreprise KDou, afin de produire des
+      analyses et des indicateurs essentiels à sa stratégie d’analyse de données. La base de données est initialement
+      fournie sous le format Microsoft Access (KDouSAE2024.accdb) et contient plusieurs tables inter-reliées
+      représentant des informations sur les produits, les fournisseurs, les clients et les transactions commerciales.
+      L’objectif est de comprendre la structure et le contenu de cette base de données, puis d’utiliser l’interface
+      graphique QBE (Query By Example) pour générer des requêtes SQL et répondre aux questions posées.</p>
+  </section>
+  <section>
+    <h2>Indicateurs intéressants</h2>
+    <article>
+      <h3>Indicateur 1 : Chiffre d'Affaire</h3>
+      <p>Le chiffre d’affaires représente le montant total des ventes réalisées. Cet indicateur est essentiel pour
+        mesurer la performance financière de l’entreprise. Le calcul du chiffre d’affaires permet de visualiser le
+        montant généré par les ventes sur une période définie.</p>
+      <figure>
+        <img src="img/(Mission%202)%20Indicateur1.png" alt="Chiffre d'affaire">
+        <figcaption>*Ici nous pouvons voir la somme totale de l'argent venant des différentes commandes</figcaption>
+      </figure>
+      <p>Le SQL menant à ce résultat :</p>
+      <pre>
+        SELECT Categorie.NomCateg, Produit.PrixUnit, Produit.UniteStock, DetailCommande.Remise,
+               ([PrixUnit]-[PrixUnit]*[Remise]) *[UniteStock] AS Prix
+        FROM (Categorie INNER JOIN Produit ON Categorie.CodeCateg = Produit.CodeCateg) INNER JOIN DetailCommande
+        ON Produit.RefProd= DetailCommande.RefProd ;
+      </pre>
+    </article>
+    <article>
+      <h3>Indicateur 2 : Prix MIN/MOYEN/MAX</h3>
+      <p>L’analyse des prix moyens, minimums et maximums des produits permet d’identifier les écarts de prix et
+        d’évaluer la politique tarifaire de l’entreprise. Cela aide à repérer les produits qui se démarquent par leur
+        prix, qu’ils soient très bas ou très élevés, et permet de déterminer une fourchette de prix standard pour le
+        catalogue d'offre.</p>
+      <figure>
+        <img src="img/(Mission%202)%20Indicateur2.png" alt="Prix minimum, moyen et maximum">
+        <figcaption>*Ici nous pouvons voir La fourchette de prix nous indiquant le maximum et le minimum, ainsi que le
+          prix moyen</figcaption>
+      </figure>
+      <p>Le SQL menant à ce résultat : </p>
+      <pre>
+        SELECT MIN(Produit.PrixUnit) As Minimum, AVG(Produit.PrixUnit) As Moyenne, MAX(Produit.PrixUnit) As Maximum
+        FROM Produit;
+      </pre>
+    </article>
+    <article>
+      <h3>Indicateur 3 : Liste de commandes d'un client en particulier</h3>
+      <p>Ce rapport génère la liste des commandes passées par un client spécifique. Cet indicateur permet de mieux
+        comprendre les habitudes d’achat du client et d’observer les produits qui sont le plus souvent commandés.
+        Cela peut aussi servir de support pour les décisions de personnalisation des offres.</p>
+      <figure>
+        <img src="img/(Mission%202)%20Indicateur3.png" alt="Liste des commandes du client">
+        <figcaption>*Ici nous n'avons pris qu'une partie de la liste.</figcaption>
+      </figure>
+      <p>Le SQL menant à ce résultat : </p>
+      <pre>
+        SELECT Produit.NomProd, Categorie.CodeCateg, Categorie.NomCateg, DetailCommande.PrixUnitCli, Produit.RefProd,
+               Commande.NoCom, Client.CodeCli, Client.ContactCli
+        FROM (Client INNER JOIN Commande ON Client.CodeCli = Commande.CodeCli) INNER JOIN ((Categorie INNER JOIN Produit
+             ON Categorie.CodeCateg = Produit.CodeCateg) INNER JOIN DetailCommande ON Produit.RefProd =
+        DetailCommande.RefProd) ON Commande.NoCom = DetailCommande.NoCom
+        WHERE (((Client.ContactCli) ="Mikal Torin")) ;
+      </pre>
+    </article>
+    <article>
+      <h3>Indicateur 4 : Liste des produit conditionnés dans des cartons ou bouteilles</h3>
+      <p>Ce rapport génère une liste des produits conditionnés dans des emballages en carton ou en bouteille, des
+        matériaux qui présentent des enjeux spécifiques pour l’engagement éco-responsable de KDou. Le carton est
+        recyclable, mais la présence de bouteilles en plastique soulève des préoccupations en matière de durabilité
+        environnementale. Ce rapport est essentiel pour permettre à l’entreprise de suivre l'usage du plastique,
+        évaluer les possibilités de le réduire ou de le remplacer par des alternatives plus écologiques. En analysant
+        ces informations, KDou pourra orienter ses décisions vers des emballages qui réduisent l’impact écologique et
+        soutiennent ses valeurs d’entreprise durable.</p>
+      <figure>
+        <img src="img/(Mission%202)%20Indicateur4.png" alt="Produits contenue dans du carton ou des bouteilles">
+        <figcaption>*Ici nous n'avons pris qu'une partie de la liste.</figcaption>
+      </figure>
+      <p>Le SQL menant à ce résultat :</p>
+      <pre>
+        SELECT Produit.NomProd, Produit.QteParUnite
+        FROM Produit
+        WHERE Produit.QteParUnite LIKE '*carton*' OR Produit.QteParUnite LIKE '*bouteille*';
+      </pre>
+    </article>
+  </section>
+</main>
+<footer>
+  <p>© 2024 Nicolas Plaisance, Imadeddine Aklouf, Ilyes Souidi, Shagisan Vinothan</p>
+</footer>
+</body>
+</html>

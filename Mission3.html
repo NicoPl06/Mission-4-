@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mission 3</title>
+  <link rel="stylesheet" href="Style.css">
+</head>
+<body>
+<header>
+  <h1>Mission 3</h1>
+
+  <nav>
+    <ul>
+      <li><a href="Accueil.html">Accueil</a></li>
+      <li><a href="Mission1.html">Mission 1</a></li>
+      <li><a href="Mission2.html">Mission 2</a></li>
+      <li><a href="Mission3.html">Mission 3</a></li>
+      <li><a href="Conclusion.html">Conclusion</a></li>
+    </ul>
+  </nav>
+</header>
+<main>
+  <section>
+    <h2>Contexte</h2>
+    <p>Cette mission a pour objectif d’exploiter la base de données de KDou pour fournir des analyses et indicateurs
+      pertinents, à l’aide du langage SQL. L’analyse porte sur différents aspects de l’offre de produits, en tenant
+      compte des catégories "desserts" et "boissons", ainsi que sur les fournisseurs, la provenance des produits, et
+      les clients. Ces indicateurs serviront à affiner l’offre de KDou et améliorer sa stratégie de vente, notamment
+      en lien avec les préférences de santé, l'origine des produits, et les remises. </p>
+  </section>
+  <section>
+    <h2>Indicateurs par thème</h2>
+    <article>
+      <h3>Indicateurs Boissons/Desserts</h3>
+      <article>
+        <h4>Indicateur 1 : Chiffre d'Affaire</h4>
+        <p>Calculer le chiffre d’affaires généré par les catégories de desserts et de boissons pour évaluer leur impact
+          financier.</p>
+        <figure>
+          <img src="img/(Mission%203)%20Indicateur1%20Desserts-Boissons.png" alt="Chiffre d'affaire (Pour Boissons + Desserts)">
+          <figcaption>*Ici nous pouvons voir la somme totale de l'argent venant des différentes commandes de boissons
+            ou de desserts</figcaption>
+        </figure>
+        <p>Le SQL menant à ce résultat :</p>
+        <pre>
+          SELECT Categorie.NomCateg, Produit.PrixUnit, Produit.UniteStock, DetailCommande.Remise,
+                 ([PrixUnit] - [PrixUnit] * [Remise]) * [UniteStock] AS Prix
+          FROM DetailCommande INNER JOIN (Categorie INNER JOIN Produit ON Categorie.CodeCateg = Produit.CodeCateg)
+                ON Produit ON Produit.RefProd = DetailCommande.RefProd
+          WHERE Categorie.NomCateg = 'Boissons' OR Categorie.NomCateg = 'Desserts';
+        </pre>
+      </article>
+      <article>
+        <h4>Indicateur 2 : Pays Fournisseurs</h4>
+        <p>Identifier les pays d'origine des desserts et boissons, pour cartographier la diversité géographique de ces
+          produits.</p>
+        <figure>
+          <img src="img/(Mission%203)%20Indicateur2%20Desserts-Boissons.png" alt="Listes des fournisseurs de boissons ou de desserts (Pays)">
+          <figcaption>*Ici nous pouvons voir la provenance de ces produits de types boissons ou desserts (Extrait).</figcaption>
+        </figure>
+        <p>Le SQL menant à ce résultat :</p>
+        <pre>
+          SELECT Categorie.NomCateg, Produit.CodeCateg, Fournisseur.Pays
+          FROM Categorie
+          INNER JOIN (Fournisseur INNER JOIN Produit ON Fournisseur.NoFour = Produit.NoFour)
+          ON Categorie.CodeCateg = Produit.CodeCateg
+          WHERE Categorie.NomCateg = 'Boissons' OR Categorie.NomCateg = 'Desserts';
+        </pre>
+      </article>
+    </article>
+    <article>
+      <h3>Indicateurs Offre de KDou</h3>
+      <article>
+        <h4>Indicateur 1 : Fournisseur qui propose des produits non commandés</h4>
+        <p> Identifier les fournisseurs dont les produits n’ont reçu aucune commande, afin d’optimiser.</p>
+        <figure>
+          <img src="img/(Mission%203)%20Indicateur1%20OffreKDou.png" alt="Liste de produits non commandés avec leus fournisseur">
+          <figcaption>*Ici nous pouvons voir la liste des références pour chaque produit non-commandés ainsi que le fournisseur
+            de ce-même produit.</figcaption>
+        </figure>
+        <p>Le SQL menant à ce résultat :</p>
+        <pre>
+           SELECT Produit.RefProd, Fournisseur.Contact
+           FROM Fournisseur
+           INNER JOIN Produit ON Fournisseur.NoFour = Produit.NoFour
+           WHERE Produit.RefProd NOT IN (SELECT RefProd FROM DetailCommande);
+        </pre>
+      </article>
+      <article>
+        <h4>Indicateur 2 : Pays qui ont une offre importante</h4>
+        <p>Déterminer les pays avec une offre de produits abondante pour repérer les principales régions
+          d’approvisionnement de KDou.</p>
+        <figure>
+          <img src="img/(Mission%203)%20Indicateur2%20OffreKDou.png" alt="Liste des pays ayant une offre importante de boissons ou de desserts">
+          <figcaption>*Ici nous pouvons voir un tri fais au niveau du nombre de produit pour chaque pays. On a pris un minimum de 6 produit pour respecter la règle de "offre importante".</figcaption>
+        </figure>
+        <p>Le SQL menant à ce résultat :</p>
+        <pre>
+          SELECT Fournisseur.Pays, COUNT(Produit.RefProd) AS NombreProduits
+          FROM Fournisseur
+          INNER JOIN (Produit INNER JOIN Categorie ON Categorie.CodeCateg = Produit.CodeCateg)
+          ON Fournisseur.NoFour = Produit.NoFour
+          WHERE Categorie.NomCateg = "Desserts" OR Categorie.NomCateg = "Boissons"
+          GROUP BY Fournisseur.Pays, Categorie.NomCateg
+          HAVING COUNT(*) > 6;
+        </pre>
+      </article>
+    </article>
+    <article>
+      <h3>Indicateurs Provenance des produits</h3>
+      <article>
+        <h4>Indicateur 1 : Fournisseur qui propose des produits spécifiques (Boissons OU Desserts)</h4>
+        <p>Identifier les fournisseurs qui proposent exclusivement des boissons ou des desserts, permettant de
+          repérer les partenaires spécialisés.</p>
+        <figure>
+          <img src="img/(Mission%203)%20Indicateur1%20Provenances.png" alt="Fournisseurs qui proposent ders boissons ou des desserts">
+          <figcaption>*Ici nous pouvons voir la liste des fournisseurs qui propose ces deux catégories.</figcaption>
+        </figure>
+        <p>Le SQL menant à ce résultat :</p>
+        <pre>
+          SELECT DISTINCT Fournisseur.Contact, Fournisseur.Societe, Categorie.NomCateg
+          FROM Fournisseur
+          INNER JOIN (Categorie INNER JOIN Produit ON Categorie.CodeCateg = Produit.CodeCateg)
+          ON Fournisseur.NoFour = Produit.NoFour
+          WHERE (Categorie.NomCateg = "Desserts" OR Categorie.NomCateg = "Boissons")
+          AND Categorie.NomCateg NOT IN ("Condiments", "Pâtes et céréales", "Poissons et fruits de mer",
+                                         "Produits laitiers", "Produits secs", "Viandes")
+          ORDER BY Fournisseur.Contact;
+        </pre>
+      </article>
+      <article>
+        <h4>Indicateur 2 : Fournisseur qui propose uniquement des produits spécifiques (Boissons ET Desserts)</h4>
+        <p>Identifier les fournisseurs polyvalents offrant les deux types de produits pour explorer des partenariats
+          plus diversifiés.</p>
+        <figure>
+          <img src="img/(Mission%203)%20Indicateur2%20Provenances.png" alt="Fournisseurs qui proposent uniquement des boissons et des desserts">
+          <figcaption>*Ici nous pouvons voir une petite sélection affichant les quelques fournisseurs qui vendent uniquement de ces deux catégories.</figcaption>
+        </figure>
+        <p>Le SQL menant à ce résultat :</p>
+        <pre>
+          SELECT Fournisseur.Contact, Fournisseur.Societe
+          FROM Fournisseur
+          INNER JOIN (Categorie INNER JOIN Produit ON Produit.CodeCateg = Categorie.CodeCateg)
+          ON Fournisseur.NoFour = Produit.NoFour
+          WHERE Categorie.NomCateg IN ("Desserts", "Boissons")
+          GROUP BY Fournisseur.Contact, Fournisseur.Societe
+          HAVING COUNT(Categorie.NomCateg) = 2
+          ORDER BY Fournisseur.Contact;
+        </pre>
+      </article>
+    </article>
+    <article>
+      <h3>Indicateurs Clients</h3>
+      <article>
+        <h4>Indicateur 1 : Couples (Ici, Besançon)</h4>
+        <p>Créer des paires de clients de Besançon pour envisager des livraisons groupées et optimiser la logistique.</p>
+        <figure>
+          <img src="img/(Mission%203)%20Indicateur1%20Clientèle.png" alt="Couple de clients vivant à Besançon">
+          <figcaption>*Ici nous pouvons voir le seul couple possible. En effet, il n'y a que 2 clients habitant à Besançon.</figcaption>
+        </figure>
+        <p>Le SQL menant à ce résultat :</p>
+        <pre>
+        SELECT A.ContactCli, B.ContactCli, A.VilleCliFROM Client AS A
+        INNER JOIN Client AS B ON (A.VilleCli = B.VilleCli) AND (A.CodeCli < B.CodeCli)
+        WHERE A.VilleCli LIKE "Besan*
+        ORDER BY A.VilleCli;
+        </pre>
+      </article>
+      <article>
+        <h4>Indicateur 2 : Produit ayant des remises de : 10%, 20% ou 0%</h4>
+        <p> Identifier les produits pour lesquels seules des remises limitées (10% ou 20%) ont été appliquées ou
+          aucune remise, afin d'explorer des possibilités de réductions futures.</p>
+        <figure>
+          <img src="img/(Mission%203)%20Indicateur2%20Clientèle.png" alt="Produit et leur remises (seulement pour les remises de 10%, 20% et 0%">
+          <figcaption>*Ici nous pouvons voir une liste de remise appliqués à des produits.</figcaption>
+        </figure>
+        <p>Le SQL menant à ce résultat :</p>
+        <pre>
+          SELECT DISTINCT Produit.NomProd, DetailCommande.Remise
+          FROM Produit
+          INNER JOIN DetailCommande ON Produit.RefProd = DetailCommande.RefProd
+          WHERE DetailCommande.Remise IN (0, 0.1, 0.2);
+        </pre>
+      </article>
+    </article>
+  </section>
+</main>
+<footer>
+  <p>© 2024 Nicolas Plaisance, Imadeddine Aklouf, Ilyes Souidi, Shagisan Vinothan</p>
+</footer>
+</body>
+</html>
