@@ -136,7 +136,7 @@ footer {
 
 @media screen and (max-width: 768px) {
     header h1 {
-        font-size: 2rem; /* Réduit pour les petits écrans */
+        font-size: 2rem;
     }
 
     nav ul {
@@ -145,12 +145,12 @@ footer {
     }
 
     nav ul li a {
-        font-size: 1rem; /* Ajuste la taille de la police */
-        padding: 5px 2%; /* Réduit les marges */
+        font-size: 1rem;
+        padding: 5px 2%;
     }
 
     main {
-        max-width: 95%; /* Prend presque toute la largeur pour optimiser l'espace */
+        max-width: 95%;
         padding: 8%;
     }
 
@@ -163,11 +163,11 @@ footer {
     }
 
     main p {
-        font-size: 1rem; /* Taille réduite légèrement */
+        font-size: 1rem;
     }
 
     figure {
-        margin: 10%; /* Plus d'espace pour une meilleure lisibilité */
+        margin: 10%;
     }
 
     footer {
