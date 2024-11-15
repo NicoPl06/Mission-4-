@@ -55,11 +55,22 @@
         d’évaluer la politique tarifaire de l’entreprise. Cela aide à repérer les produits qui se démarquent par leur
         prix, qu’ils soient très bas ou très élevés, et permet de déterminer une fourchette de prix standard pour le
         catalogue d'offre.</p>
-      <figure>
-        <img src="img/(Mission%202)%20Indicateur2.png" alt="Prix minimum, moyen et maximum">
-        <figcaption>*Ici nous pouvons voir La fourchette de prix nous indiquant le maximum et le minimum, ainsi que le
-          prix moyen</figcaption>
-      </figure>
+      <table>
+        <thead>
+        <tr>
+          <th>Minimum</th>
+          <th>Moyenne</th>
+          <th>Maximum</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>2,08 €</td>
+          <td>33,54 €</td>
+          <td>320,00 €</td>
+        </tr>
+        </tbody>
+      </table>
       <p>Le SQL menant à ce résultat : </p>
       <pre>
         SELECT MIN(Produit.PrixUnit) As Minimum, AVG(Produit.PrixUnit) As Moyenne, MAX(Produit.PrixUnit) As Maximum
