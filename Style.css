@@ -134,4 +134,43 @@ footer {
     font-size: 1rem;
 }
 
+@media screen and (max-width: 768px) {
+    header h1 {
+        font-size: 2rem; /* Réduit pour les petits écrans */
+    }
 
+    nav ul {
+        flex-direction: column;
+        gap: 2%;
+    }
+
+    nav ul li a {
+        font-size: 1rem; /* Ajuste la taille de la police */
+        padding: 5px 2%; /* Réduit les marges */
+    }
+
+    main {
+        max-width: 95%; /* Prend presque toute la largeur pour optimiser l'espace */
+        padding: 8%;
+    }
+
+    main h2 {
+        font-size: 2rem;
+    }
+
+    main h3 {
+        font-size: 1.5rem;
+    }
+
+    main p {
+        font-size: 1rem; /* Taille réduite légèrement */
+    }
+
+    figure {
+        margin: 10%; /* Plus d'espace pour une meilleure lisibilité */
+    }
+
+    footer {
+        font-size: 0.9rem;
+    }
+}
