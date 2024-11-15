@@ -155,7 +155,7 @@ tbody td {
 }
 
 tr:nth-child(even) {
-    background-color: #d0e4f6;
+    background-color: white;
 }
 
 tr:nth-child(odd) {
